@@ -1,3 +1,33 @@
 spring:
   application:
     name: coin-alarm
+
+management:
+  statsd:
+    metrics:
+      export:
+        enabled: true
+        host: 127.0.0.1
+        port: 8125
+        protocol: udp
+        flavor: datadog
+        step: 1m
+        polling-frequency: 10s
+
+  metrics:
+    tags:
+      application: coin-alarm
+      environment: aws
+
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics
+
+  endpoint:
+    health:
+      show-details: never
+
+logging:
+  file:
+    name: /var/log/coin-alarm/application.log
