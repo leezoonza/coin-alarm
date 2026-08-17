@@ -3,26 +3,19 @@ spring:
     name: coin-alarm
 
 management:
-  statsd:
-    metrics:
-      export:
-        enabled: true
-        host: 127.0.0.1
-        port: 8125
-        protocol: udp
-        flavor: datadog
-        step: 1m
-        polling-frequency: 10s
-
   metrics:
     tags:
       application: coin-alarm
       environment: aws
 
+    distribution:
+      percentiles-histogram:
+        coin.stream.parse.duration: true
+
   endpoints:
     web:
       exposure:
-        include: health,metrics
+        include: health,metrics,prometheus
 
   endpoint:
     health:

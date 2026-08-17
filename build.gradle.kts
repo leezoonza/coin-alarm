@@ -25,7 +25,7 @@ dependencies {
 
     compileOnly("org.projectlombok:lombok")
 
-    runtimeOnly("io.micrometer:micrometer-registry-statsd")
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
     annotationProcessor("org.projectlombok:lombok")
 
