@@ -3,4 +3,4 @@
 )
 package com.zoonza.coinalarm.common;
 
-import static org.springframework.modulith.ApplicationModule.*;
+import static org.springframework.modulith.ApplicationModule.Type;

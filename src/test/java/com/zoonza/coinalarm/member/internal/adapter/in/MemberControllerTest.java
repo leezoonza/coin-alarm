@@ -8,6 +8,7 @@ import com.zoonza.coinalarm.member.internal.application.port.in.MemberCommandUse
 import com.zoonza.coinalarm.member.internal.application.port.in.MemberQueryUseCase;
 import com.zoonza.coinalarm.member.internal.domain.MemberErrorCode;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -62,6 +63,7 @@ class MemberControllerTest {
     }
 
     @Test
+    @DisplayName("로그인 아이디의 사용 가능 여부를 응답한다")
     void returnsLoginIdAvailability() throws Exception {
         when(memberQueryUseCase.isLoginIdAvailable("available-id")).thenReturn(true);
 
@@ -73,6 +75,7 @@ class MemberControllerTest {
     }
 
     @Test
+    @DisplayName("현재 시각을 기준으로 회원을 등록한다")
     void registersMemberWithCurrentTime() throws Exception {
         MemberRegisterRequest request = new MemberRegisterRequest(
                 "zoonza",
@@ -97,6 +100,7 @@ class MemberControllerTest {
     }
 
     @Test
+    @DisplayName("회원가입 요청 값이 비어 있으면 검증 오류를 응답한다")
     void returnsValidationErrorsForBlankRegistrationFields() throws Exception {
         MemberRegisterRequest request = new MemberRegisterRequest(
                 " ",
@@ -113,6 +117,7 @@ class MemberControllerTest {
     }
 
     @Test
+    @DisplayName("도메인 예외를 오류 응답으로 변환한다")
     void convertsDomainExceptionToErrorResponse() throws Exception {
         when(memberQueryUseCase.isLoginIdAvailable("used-id"))
                 .thenThrow(new DomainException(MemberErrorCode.DUPLICATE_LOING_ID));
@@ -127,6 +132,7 @@ class MemberControllerTest {
     }
 
     @Test
+    @DisplayName("예상하지 못한 예외의 상세 정보를 응답에 노출하지 않는다")
     void hidesUnexpectedExceptionDetails() throws Exception {
         when(memberQueryUseCase.isLoginIdAvailable("broken-id"))
                 .thenThrow(new IllegalStateException("database password leaked"));

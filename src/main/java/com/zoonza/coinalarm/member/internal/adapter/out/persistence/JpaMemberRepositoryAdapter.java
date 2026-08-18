@@ -5,6 +5,8 @@ import com.zoonza.coinalarm.member.internal.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class JpaMemberRepositoryAdapter implements MemberRepository {
@@ -13,6 +15,11 @@ public class JpaMemberRepositoryAdapter implements MemberRepository {
     @Override
     public boolean existsByLoginId(String loginId) {
         return repository.existsByLoginId(loginId);
+    }
+
+    @Override
+    public Optional<Member> findByLoginId(String loginId) {
+        return repository.findByLoginId(loginId);
     }
 
     @Override

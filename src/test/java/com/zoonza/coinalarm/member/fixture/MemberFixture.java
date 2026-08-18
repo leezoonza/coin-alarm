@@ -4,6 +4,8 @@ import com.zoonza.coinalarm.member.internal.domain.Member;
 
 import java.time.Instant;
 
+import static com.zoonza.coinalarm.member.fixture.PasswordEncoderFixture.returning;
+
 public final class MemberFixture {
     public static final String PASSWORD_HASH = "encoded-password";
     public static final Instant CREATED_AT = Instant.parse("2026-08-18T00:00:00Z");
@@ -15,7 +17,7 @@ public final class MemberFixture {
         return Member.register(
                 loginId,
                 "raw-password",
-                ignored -> PASSWORD_HASH,
+                returning(PASSWORD_HASH),
                 CREATED_AT
         );
     }

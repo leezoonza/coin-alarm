@@ -1,0 +1,13 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+member:
+  authentication:
+    issuer: coin-alarm-test
+    access-token-ttl: 10m
+    refresh-token-ttl: 7d
+    jwt-secret: test-only-secret-key-that-is-at-least-32-bytes
+    refresh-token-cache-maximum-size: 100
+    refresh-token-cookie-secure: false

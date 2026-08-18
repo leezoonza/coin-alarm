@@ -28,6 +28,8 @@ public class Member {
     @Column(nullable = false)
     private Instant updatedAt;
 
+    private Instant lastLoginAt;
+
     private Member(
             String loginId,
             String passwordHash,
@@ -68,5 +70,14 @@ public class Member {
                 createdAt,
                 createdAt
         );
+    }
+
+    public void recordLogin(Instant loggedInAt) {
+        if (loggedInAt == null) {
+            throw new IllegalArgumentException("마지막 로그인 일시는 null일 수 없습니다.");
+        }
+
+        this.lastLoginAt = loggedInAt;
+        this.updatedAt = loggedInAt;
     }
 }

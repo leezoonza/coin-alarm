@@ -7,6 +7,7 @@ import com.zoonza.coinalarm.member.internal.domain.MemberErrorCode;
 import com.zoonza.coinalarm.member.internal.domain.MemberRepository;
 import com.zoonza.coinalarm.member.internal.domain.PasswordEncoder;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -17,9 +18,7 @@ import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MemberCommandServiceTest {
@@ -39,6 +38,7 @@ class MemberCommandServiceTest {
     }
 
     @Test
+    @DisplayName("사용 가능한 로그인 아이디로 회원을 등록한다")
     void registersMemberWhenLoginIdIsAvailable() {
         MemberRegisterCommand command = new MemberRegisterCommand(
                 "zoonza",
@@ -61,6 +61,7 @@ class MemberCommandServiceTest {
     }
 
     @Test
+    @DisplayName("중복된 로그인 아이디이면 비밀번호 암호화와 저장 없이 실패한다")
     void rejectsDuplicateLoginIdWithoutEncodingOrSaving() {
         MemberRegisterCommand command = new MemberRegisterCommand(
                 "zoonza",
