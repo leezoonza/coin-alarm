@@ -1,0 +1,40 @@
+package com.zoonza.coinalarm.common.error;
+
+public enum CommonErrorCode implements ErrorCode {
+    INTERNAL_SERVER_ERROR(
+            "COMMON-001",
+            "서버 내부 오류가 발생했습니다.",
+            500
+    ),
+
+    VALIDATION_FAILED(
+            "COMMON-002",
+            "요청 값이 올바르지 않습니다.",
+            400
+    );
+
+    private final String code;
+    private final String message;
+    private final int status;
+
+    CommonErrorCode(String code, String message, int status) {
+        this.code = code;
+        this.message = message;
+        this.status = status;
+    }
+
+    @Override
+    public String getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
+
+    @Override
+    public int getStatus() {
+        return status;
+    }
+}

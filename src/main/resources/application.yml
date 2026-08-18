@@ -2,25 +2,25 @@ spring:
   application:
     name: coin-alarm
 
-management:
-  metrics:
-    tags:
-      application: coin-alarm
-      environment: aws
-
-    distribution:
-      percentiles-histogram:
-        coin.stream.parse.duration: true
-
-  endpoints:
-    web:
-      exposure:
-        include: health,metrics,prometheus
-
-  endpoint:
-    health:
-      show-details: never
-
-logging:
-  file:
-    name: /var/log/coin-alarm/application.log
+#management:
+#  metrics:
+#    tags:
+#      application: coin-alarm
+#      environment: aws
+#
+#    distribution:
+#      percentiles-histogram:
+#        coin.stream.parse.duration: true
+#
+#  endpoints:
+#    web:
+#      exposure:
+#        include: health,metrics,prometheus
+#
+#  endpoint:
+#    health:
+#      show-details: never
+#
+#logging:
+#  file:
+#    name: /var/log/coin-alarm/application.log
