@@ -14,7 +14,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneOffset;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -34,7 +36,8 @@ class MemberCommandServiceTest {
 
     @BeforeEach
     void setUp() {
-        service = new MemberCommandService(memberRepository, passwordEncoder);
+        Clock clock = Clock.fixed(CREATED_AT, ZoneOffset.UTC);
+        service = new MemberCommandService(clock, passwordEncoder, memberRepository);
     }
 
     @Test
@@ -42,8 +45,7 @@ class MemberCommandServiceTest {
     void registersMemberWhenLoginIdIsAvailable() {
         MemberRegisterCommand command = new MemberRegisterCommand(
                 "zoonza",
-                "secret",
-                CREATED_AT
+                "secret"
         );
         when(memberRepository.existsByLoginId("zoonza")).thenReturn(false);
         when(passwordEncoder.encode("secret")).thenReturn("encoded-secret");
@@ -65,8 +67,7 @@ class MemberCommandServiceTest {
     void rejectsDuplicateLoginIdWithoutEncodingOrSaving() {
         MemberRegisterCommand command = new MemberRegisterCommand(
                 "zoonza",
-                "secret",
-                CREATED_AT
+                "secret"
         );
         when(memberRepository.existsByLoginId("zoonza")).thenReturn(true);
 

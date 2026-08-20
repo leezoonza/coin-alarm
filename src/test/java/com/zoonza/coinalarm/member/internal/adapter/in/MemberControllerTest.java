@@ -19,10 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import tools.jackson.databind.ObjectMapper;
 
-import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneOffset;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.verify;
@@ -34,8 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 class MemberControllerTest {
-    private static final Instant NOW = Instant.parse("2026-08-18T00:00:00Z");
-
     @Mock
     private MemberQueryUseCase memberQueryUseCase;
 
@@ -48,10 +42,7 @@ class MemberControllerTest {
 
     @BeforeEach
     void setUp() {
-        Clock clock = Clock.fixed(NOW, ZoneOffset.UTC);
-
         MemberController controller = new MemberController(
-                clock,
                 memberQueryUseCase,
                 memberCommandUseCase
         );
@@ -75,8 +66,8 @@ class MemberControllerTest {
     }
 
     @Test
-    @DisplayName("현재 시각을 기준으로 회원을 등록한다")
-    void registersMemberWithCurrentTime() throws Exception {
+    @DisplayName("회원 등록 요청을 명령으로 변환한다")
+    void convertsMemberRegistrationRequestToCommand() throws Exception {
         MemberRegisterRequest request = new MemberRegisterRequest(
                 "zoonza",
                 "secret"
@@ -94,8 +85,7 @@ class MemberControllerTest {
 
         assertThat(commandCaptor.getValue()).isEqualTo(new MemberRegisterCommand(
                 "zoonza",
-                "secret",
-                NOW
+                "secret"
         ));
     }
 

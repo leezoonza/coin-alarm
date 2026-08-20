@@ -10,11 +10,15 @@ import com.zoonza.coinalarm.member.internal.domain.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
+import java.time.Instant;
+
 @Service
 @RequiredArgsConstructor
 public class MemberCommandService implements MemberCommandUseCase {
-    private final MemberRepository memberRepository;
+    private final Clock clock;
     private final PasswordEncoder passwordEncoder;
+    private final MemberRepository memberRepository;
 
     @Override
     public void register(MemberRegisterCommand command) {
@@ -24,7 +28,7 @@ public class MemberCommandService implements MemberCommandUseCase {
                 command.loginId(),
                 command.rawPassword(),
                 passwordEncoder,
-                command.createdAt()
+                Instant.now(clock)
         );
 
         memberRepository.save(member);

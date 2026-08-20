@@ -11,14 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Clock;
-import java.time.Instant;
-
 @RestController
 @RequestMapping("/api/members")
 @RequiredArgsConstructor
 public class MemberController {
-    private final Clock clock;
     private final MemberQueryUseCase memberQueryUseCase;
     private final MemberCommandUseCase memberCommandUseCase;
 
@@ -36,9 +32,7 @@ public class MemberController {
     public ApiResponse<Void> register(
             @Valid @RequestBody MemberRegisterRequest request
     ) {
-        Instant now = Instant.now(clock);
-
-        MemberRegisterCommand command = request.toCommand(now);
+        MemberRegisterCommand command = request.toCommand();
 
         memberCommandUseCase.register(command);
 
